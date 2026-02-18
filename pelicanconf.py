@@ -1,7 +1,7 @@
 # https://docs.getpelican.com/en/latest/settings.html
 
 SITENAME = 'DevSensation'
-# SITEURL = 'https://avisiedo.github.io/blog'
+SITEURL = 'https://avisiedo.github.io/blog'
 
 PATH = 'content'
 STATIC_PATHS = ['static', 'images', 'favicon.ico']
