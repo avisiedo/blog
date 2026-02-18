@@ -30,6 +30,11 @@ or try on my personal systems.
   direnv allow
   ```
 
+- Install java: https://www.oracle.com/java/technologies/downloads/
+- Install plantuml: https://plantuml.com/es/download
+- Install graphviz: https://www.graphviz.org/download/
+- (optional) install vscode pluging for plantuml: https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml
+
 - Create toolbox: `toolbox.sh create`
 
 **On time task - alternative**
