@@ -21,22 +21,22 @@ AUTHOR_FEED_RSS = None
 LINKS = (('Pelican', 'https://getpelican.com/'),
          ('Python.org', 'https://www.python.org/'),
          ('Jinja2', 'https://palletsprojects.com/p/jinja/'),
-         ('You can modify those links in your config file', '#'),)
+        )
 
 # Social widget
 SOCIAL = (
   ('github', 'https://github.com/avisiedo'),
-  ('github', 'https://github.com/little-engineer-2025'),
-  ('envelope','mailto:learning.little.engineer.2025.1+spam@gmail.com'),
+  ('envelope','mailto:alejandro.visiedo+spam@gmail.com'),
 )
+SHOW_SOCIAL_ON_INDEX_PAGE_HEADER = True
 
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+RELATIVE_URLS = True
 
 # https://github.com/gilsondev/pelican-clean-blog/tree/master?tab=readme-ov-file
-THEME = './templates/pelican-clean-blog'
+THEME = './templates/blog-theme'
 
 # Template specific
 # https://github.com/gilsondev/pelican-clean-blog/tree/master?tab=readme-ov-file#basic-configuration
