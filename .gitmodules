@@ -7,3 +7,6 @@
 [submodule "templates/blog-theme"]
 	path = templates/blog-theme
 	url = git@github.com:little-engineer-2025/blog-theme.git
+[submodule "plugins"]
+	path = plugins
+	url = https://github.com/getpelican/pelican-plugins.git

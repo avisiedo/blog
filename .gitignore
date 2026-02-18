@@ -17,6 +17,11 @@
 !.github/**
 !.github/**/*
 
+# Plugins
+!plugins
+!plugins/**
+!plugins/**/*
+
 # Blog contents
 !content
 !content/**
