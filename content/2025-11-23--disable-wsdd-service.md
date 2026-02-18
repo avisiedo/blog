@@ -12,8 +12,9 @@ Header_Cover:
 # Disable wsdd service
 
 The Web Search Discovery host Daemon allow to discover hosts in a windows
-network. But it reveals information that we could want to void, because it makes
-easier the discovery and recognition in a network.
+network. It uses ports 3702/udp and 5357/tcp. But this service reveals
+information that we could want to void, because it makes easier the discovery
+and recognition in a network.
 
 This service is not managed by systemd, but exists a way to disable it, by
 using `gsettings` command.
@@ -25,7 +26,7 @@ gsettings set org.gnome.system.wsdd display-mode 'disabled'
 ```
 
 You could need to reboot, but after that, you should not see the service
-listening on port 3702.
+listening on port 3702/udp and 5357/tcp.
 
 See you on the next post!
 
