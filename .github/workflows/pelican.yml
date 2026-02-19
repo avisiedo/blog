@@ -15,6 +15,6 @@ jobs:
     with:
       settings: "publishconf.py"
       requirements: "-r requirements.txt"
-      theme: "https://github.com/gilsondev/pelican-clean-blog.git"
+      theme: "https://github.com/avisiedo/blog-theme.git"
       python: "3.13"
 
