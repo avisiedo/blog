@@ -15,8 +15,12 @@ Status: published
 I have not used windows from a while, and several things that I use to do in
 Linux systems, are different in Windows. One of this things are customize my
 Windows terminal session by using an init script ($PROFILE) so I can define
-useful alises. In particular I want to start defining my dotfiles alias to
-run it in the same way I do in Linux.
+useful aliases (or functions in this case). But when I tried to use $PROFILE
+I realized that to allow it I had to degrade the `ExecutionPolicy` to be
+extremaly permissive, and setting the `Scope` to the `Process`, everytime I
+open a terminal, is tedious. So I have tried to sign my script so the
+`ExecutionPolicy` can be set to `AllSigned` and do not loose too much on the
+security levels. The steps could breakdown as below:
 
 - Define the initial content for the `$PROFILE` file.
 - Create a self-signed certificate.
@@ -26,6 +30,9 @@ run it in the same way I do in Linux.
 
 ## Define the initial content
 
+The initial $PROFILE content is only the below content (once it works we can
+add whatever we could need).
+
 ```powershell
 function dotfiles {
   git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" @args
@@ -33,6 +40,9 @@ function dotfiles {
 ```
 
 ## Create a self-signed certificate
+
+We have to create a self-signed certificate, store it in our local
+certificate storage (no system, so no privileges are needed).
 
 ```powershell
 $certName = "Alejandro Visiedo"
@@ -42,8 +52,25 @@ $cert = New-SelfSignedCertificate -Type CodeSigningCert `
                                   -DnsName $dnsName `
                                   -CertStoreLocation "Cert:\CurrentUser\My" `
                                   -NotAfter (Get-Date).AddYears(5) `
-                                  -KeyExportPolicy Exportable
+                                  -KeyExportPolicy NonExportable
 ```
+
+- `-Type CodeSigningCert`: We indicate we want a certificate to sign code as
+  we want to sign our scripts.
+- `-Subject "CN=$certName"`: We inform the value for the Subject of the
+  certificate. As it is a self-signed, this value will be used to for the
+  `-Issuer`.
+- `-DnsName $dnsName`: This value is not importante, just using a common
+  value that is broadly used. It is important on the scope of TLS
+  certificates.
+- `-CertStoreLocation "Cert:\CurrentUser\My"`: Indicate the store where the
+  certificates and key pair will be stored. As we are using the user store,
+  we don't need elevate privileges.
+- `-NotAfter (Get-Date).AddYears(5)`: The certificate will outdate in five
+  years.
+- `-KeyExportPolicy NonExportable`: This argument indicate that the key stored
+  are not exportable.
+
 
 > We can check the certificate by running `certmgr.msc`
 
@@ -86,6 +113,14 @@ Before to enable $PROFILE you have to run:
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy AllSigned
 ```
 
+As we can see, we shrink the scope to the current user only, and the execution
+policy will be applied to all signed scripts.
+
+Any script from other user that we don't trust or not signed scripts
+will be rejected its execution.
+
+Finally all the above together could be joined in the script below:
+
 ```powershell
 # 1. Configure names
 $certName = "Alejandro Visiedo"
@@ -97,7 +132,7 @@ $cert = New-SelfSignedCertificate -Type CodeSigningCert `
                                   -DnsName $dnsName `
                                   -CertStoreLocation "Cert:\CurrentUser\My" `
                                   -NotAfter (Get-Date).AddYears(5) `
-                                  -KeyExportPolicy Exportable
+                                  -KeyExportPolicy NonExportable
 
 Write-Host "Certificate create with Thumbprint: $($cert.Thumbprint)"
 
