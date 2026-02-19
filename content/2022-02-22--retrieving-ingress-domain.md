@@ -1,19 +1,19 @@
 ---
-title: Retrieving the ingressDomain
-categories:
-  - kubernetes
-tags:
-  - kubernetes
-  - ingress
-  - openshift
-published_date: "2022-02-22 12:45:41 +0100"
-layout: default.liquid
-is_draft: false
+Title: Retrieving the ingressDomain
+Date: "2022-02-22 12:45:41 +0100"
+Modified: "2022-02-22 12:45:41 +0100"
+Category: kubernetes
+Tags: kubernetes, ingress, openshift
+Slug: retrieving-the-ingressdomain
+Authors: Alejandro Visiedo
+Summary: How to retrieve the cluster base domain
+Header_Cover: static/header-cover.jpg
+Status: published
 ---
 When we are publishing a service out of our OpenShift cluster, one option
 is using a Route object. The `host` field is optional, and can be
 used to customize the pattern to be matched when the HTTP request is sent
-to our cluster, which is used to dispatch the request to the propper
+to our cluster, which is used to dispatch the request to the proper
 Service resource. This is made by using a reverse proxy, in the case
 of OpenShift, haproxy deployed by the ingress controller.
 
@@ -167,7 +167,7 @@ into the Route resource by default. This provide the following:
   this could require additional DNS name resolution.
   (see [this](https://docs.openshift.com/container-platform/4.9/networking/ingress-operator.html#nw-ingress-controller-configuration-parameters_configuring-ingress)).
 
-By the way, the above explained will works as it will be based into the
+By the way, the above explained will work as it will be based into the
 DNS registries required for creating an OpenShift cluster.
 ## Wrap up
 
