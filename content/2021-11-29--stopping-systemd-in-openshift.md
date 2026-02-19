@@ -1,19 +1,23 @@
 ---
-title: Stopping systemd workloads in Openshift
-published_date: 2021-11-29 17:00:00 +0100
-layout: default.liquid
+Title: Stopping systemd workloads in OpenShift
+Date: 2021-11-29 17:00:00 +0100
+Modified: 2026-02-13 10:00
+Category: kubernetes
+Tags: kubernetes, OpenShift, cri-o, sigstop
+Slug: stopping-systemd-workloads-in-openshift
+Authors: Alejandro Visiedo
+Summary: How to integrate systemd workloads in OpenShift
+Header_Cover: static/header-cover.jpg
 Status: published
-categories: ["kubernetes"]
-tags: ["kubernetes", "openshift", "cri-o", "sigstop"]
 ---
 Are you using systemd workloads? Then this article could be of interest.
 In this article we are going to see how workloads based on systemd
-can be stopped gracefully on Openshift.
+can be stopped gracefully on OpenShift.
 
 We are going to do hands-on activities, using a simple systemd workload
 which runs an nginx service. We will see the differences between using the
-workload in Podman and using the workload in Openshift. Finally we will see
-how to overcome the limitation in Openshift by using container lifecycle hooks.
+workload in Podman and using the workload in OpenShift. Finally we will see
+how to overcome the limitation in OpenShift by using container lifecycle hooks.
 
 **Prerequisites**
 
@@ -27,8 +31,8 @@ how to overcome the limitation in Openshift by using container lifecycle hooks.
 
 **Updates**:
 
-- This is happening in Openshift but it will be fixed in 4.10 (verified on
-  Openshift 4.10.0-ci-20220107).
+- This is happening in OpenShift but it will be fixed in 4.10 (verified on
+  OpenShift 4.10.0-ci-20220107).
 - Here is the change at cri-o that fix this situation:
   https://github.com/cri-o/cri-o/pull/5366
 
@@ -185,9 +189,9 @@ Detected architecture x86-64.
 ```
 
 We can see that systemd does not begin the stop sequence as was the
-case with podman.  This is because Openshift did not translate the
+case with podman. This is because OpenShift did not translate the
 `STOPSIGNAL` instruction specified in the Dockerfile (this will be fixed
-at Openshift 4.10). To work around this situation we will
+at OpenShift 4.10). To work around this situation we will
 use [container lifecycle hooks](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/),
 to explicitly send `SIGRTMIN+3` to PID 1 (systemd).
 
@@ -276,15 +280,15 @@ Exiting by SIGINT
 ```
 
 When the `SIGINT` is specified into the STOPSIGNAL instruction in the Dockerfile
-Openshift is sending SIGINT signal to the pod when we delete the resource.
+OpenShift is sending SIGINT signal to the pod when we delete the resource.
 
-> When the `STOPSIGNAL 37` (`RTMIN+3`) is specified as a numeric value, Openshift
+> When the `STOPSIGNAL 37` (`RTMIN+3`) is specified as a numeric value, OpenShift
 > is sending SIGTERM instead of the expected `SIGRTMIN+3` indicated into the
 > Dockerfile file.
 
 **Update**:
 
-> Another test was made in Openshift 4.10 ci build on Wed Jan 5, 2022 and it worked
+> Another test was made in OpenShift 4.10 ci build on Wed Jan 5, 2022 and it worked
 > as expected, by sending the `SIGRTMIN+3` to the container workload. So this will
 > be fixed in future releases.
 
@@ -415,7 +419,7 @@ In this article we have seen that:
 
 - systemd workloads need `SIGRTMIN+3` for stopping the workload gracefully.
 - OpenShift does not send the signal specified in the container
-  image (via the `STOPSIGNAL` instruction). It does starting in Openshift 4.10.
+  image (via the `STOPSIGNAL` instruction). It does starting in OpenShift 4.10.
 - We can use a container lifecycle hook to
   interact with the workload when stopping the container until the fix is
   available. For this scenario, we can use the `kill` binary (which must exist in the
@@ -423,7 +427,7 @@ In this article we have seen that:
 
 **Updates**:
 
-- The reason the STOPSINAL instruction is not interpreted in Openshift is
+- The reason the STOPSINAL instruction is not interpreted in OpenShift is
   because the signal name RTMIN+3 is not properly parsed. Actually there
   are a fix for this situation ([this PR](https://github.com/cri-o/cri-o/pull/5366)),
   that has been seen that will be included in OpenShift 4.10. Until this

@@ -1,8 +1,14 @@
 ---
-title: Configuring ocp for user namespace
-published_date: "2022-01-31 10:45:58 +0100"
-layout: default.liquid
-is_draft: false
+Title: Configuring OCP for user namespaces
+Date: 2022-01-31 10:45:58 +0100
+Modified: 2022-01-31 10:45:58 +0100
+Category: kubernetes
+Tags: kubernetes, OpenShift
+Slug: configuring-ocp-for-user-namespace
+Authors: Alejandro Visiedo
+Summary: Preparing an OpenShift cluster for using namespaces
+Header_Cover: static/header-cover.jpg
+Status: published
 ---
 Preparing an OpenShift cluster for using user namespaces involves
 several steps and hands-over. To simplify the process we are using
@@ -85,7 +91,7 @@ ones, that are divided on:
   user namespaces. Different files can be found at
   `config/static/nodes/userns-subid/files` to spicify the subuid and subgid
   information.
-  - `99-crio-userns.conf`: Enable the `io.kubernates.cri-o.userns-mode` annotation
+  - `99-crio-userns.conf`: Enable the `io.kubernetes.cri-o.userns-mode` annotation
     into the PodSpec.
   - `subuid` and `subgid`: Configure the subordinate ids to be used by the user namespace.
 - `config/static/nodes/rpm-overrides`: This configuration handle the RPM
