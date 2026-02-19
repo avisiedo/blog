@@ -36,7 +36,7 @@ SHOW_SOCIAL_ON_INDEX_PAGE_HEADER = True
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
-RELATIVE_URLS = True
+RELATIVE_URLS = False
 
 # https://github.com/gilsondev/pelican-clean-blog/tree/master?tab=readme-ov-file
 THEME = './templates/blog-theme'
