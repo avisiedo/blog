@@ -54,9 +54,9 @@ Generate the key pair as below:
 ```sh
 ssh-keygen -t ed25519-sk \
     -O resident \
-    -O application=ssh:fedora \
+    -O application=ssh: \
     -O verify-required \
-    -f ~/.ssh/id_ed25519_sk_rk_fedora
+    -f ~/.ssh/id_ed25519_sk_rk
 ```
 
 - `-O resident` indicate to generate a resident key.
@@ -78,14 +78,30 @@ cd ~/.ssh
 ssh-keygen -K
 ```
 
+> NOTE: In macOS requires to install ssh from homebrew, because the openssh
+> installed by the system does not have support for **secret keys** (physical
+> security key) nor **resident key** (stored in the device internal memory).
+>
+> I moved the identities from one system to another without compromise them.
+
 Configure Git for SSH Signing:
 
 ```sh
 git config --global gpg.format ssh
-git config --global user.signingkey "~/.ssh/id_ed25519_sk_rk_fedora.pub"
+git config --global user.signingkey "~/.ssh/id_ed25519_sk_rk.pub"
 git config --global commit.gpgSign true
 git config --global tag.forceSignAnnotated true
 ```
+
+Configure SSH (the key to identify does not match the defaults that try SSH, so
+we need to let it know to SSH by adding the content below to `.ssh/config`:
+
+```raw
+IdentityFile ~/.ssh/id_ed25519_sk_rk
+```
+
+> This was detected in macOS system when verifying the connection by
+> `ssh -T git@github.com`
 
 Create and configure the allowed signers file.
 
