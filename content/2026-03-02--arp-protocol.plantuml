@@ -1,0 +1,35 @@
+@startuml
+skinparam sequenceMessageAlign center
+
+participant "Host Origen\n(192.168.1.5)" as A
+participant "Switch / Red" as S
+participant "Host Destino\n(192.168.1.10)" as B
+participant "Otros Hosts" as C
+
+Note over A: Consulta caché ARP:\nMAC desconocida para .10
+
+== Proceso ARP Request ==
+
+A -> S: ARP Request (Broadcast)
+Note right of A: Frame Eth: Dest=FF:FF:FF:FF:FF:FF\n"¿Quién es 192.168.1.10? Avisar a .5"
+
+S -> B: Reenvío Broadcast
+S -> C: Reenvío Broadcast
+
+Note over C: IP no coincide.\nDescartar paquete.
+
+== Proceso ARP Reply ==
+
+Note over B: IP coincide.\nActualiza tabla ARP con MAC de A.
+
+B -> S: ARP Reply (Unicast)
+Note left of B: Frame Eth: Dest=MAC_A\n"Soy 192.168.1.10, mi MAC es BB:BB..."
+
+S -> A: Reenvío Unicast
+
+Note over A: Recibe respuesta.\nGuarda MAC de B en caché.
+
+== Envío de Datos ==
+
+A -> B: Paquete IP (Encapsulado en Ethernet con MAC_B)
+@enduml
