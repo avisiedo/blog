@@ -11,7 +11,7 @@ TIMEZONE = 'Europe/Madrid'
 DEFAULT_LANG = 'en'
 
 PLUGIN_PATHS = ['plugins']
-PLUGINS = ['seo', 'readtime', 'plantuml']
+PLUGINS = ['readtime', 'plantuml']
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
