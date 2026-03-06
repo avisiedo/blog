@@ -37,7 +37,7 @@ or try on my personal systems.
 
 - Create toolbox: `toolbox.sh create`
 
-**On time task - alternative**
+**Once tasks - alternative**
 
 ```sh
 cd ~/workspace
