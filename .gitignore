@@ -15,31 +15,28 @@
 
 # .github directories
 !.github
-!.github/**
 !.github/**/*
 
 # Plugins
 !plugins
-!plugins/**
 !plugins/**/*
 
 # Blog contents
 !content
-!content/**
 !content/**/*
 
 # Scripts
 !scripts
-!scripts/**
 !scripts/**/*
 
 # Static contents
 !static
-!static/**
 !static/**/*
 
 # Templates submodules
 !templates
-!templates/**
 !templates/**/*
+
+
+**/DS_Store
 
