@@ -81,7 +81,7 @@ Tags: ${ARTICLE_TAGS}
 Slug: ${ARTICLE_SLUG}
 Authors: ${ARTICLE_AUTHORS}
 Summary: ${ARTICLE_SUMMARY}
-Header_Cover: ${ARTICLE_HEADER_COVER}
+Header_Cover: ${ARTICLE_HEAD_COVER}
 ---
 # ${ARTICLE_TITLE}
 
