@@ -43,3 +43,4 @@
 !templates/**
 !templates/**/*
 
+**/.DS_Store
