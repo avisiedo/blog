@@ -1,7 +1,7 @@
 ---
 Title: Passwordless environment
 Date: 2025-10-31 1:00
-Modified: 2025-11-30 21:00
+Modified: 2026-03-13 20:00
 Category: security
 Tags: silverblue, yubico, gdm, ssh, login, fido2, passkey
 Slug: passwordless
@@ -26,7 +26,7 @@ references.
   `mkdir ~/.config/Yubico`
 - Add the configuration line by: `pamu2fcfg --username=$USER > ~/.config/Yubico/u2f_keys`
 - Shrink permissions: `chmod 0400 ~/.config/Yubico/u2f_keys`
-- Copy u2f_keys to a the global location below by: `run0 cp -vf ~/.config/Yubico/u2f_keys /etc/u2f_mappings`
+- Copy u2f_keys to the global location below by: `run0 cp -vf ~/.config/Yubico/u2f_keys /etc/u2f_mappings`
 
 ## Set up passwordless
 
@@ -160,7 +160,6 @@ touching it.
 
 ## Lock screen on extracting token
 
-- Note the product and vendor for your fido device: `ls usb`
 - Create the file `/usr/local/bin/lockcomputer.sh`:
 
 ```sh
@@ -170,9 +169,7 @@ cat <<EOF | run0 tee /usr/local/bin/lockcomputer.sh
 
 # Inspired by: https://gist.github.com/jhass/070207e9d22b314d9992
 
-# INFO This script lock the screen when it is invoked
-
-# Inspired by: https://gist.github.com/jhass/070207e9d22b314d9992
+# INFO This script lock the screen and disconnect network when it is invoked
 
 lockscreen() {
   busctl call org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager LockSessions
@@ -197,10 +194,12 @@ EOF
 
 # Change permissions
 run0 chmod u+x /usr/local/bin/lockcomputer.sh
+```
 
-# Check your ID_MODEL_ID and ID_VENDOR_ID by: lsusb
+- Create udev rule file to lock the computer on removing the key event.
+  This rule is generic, and it likely works for any fido device.
 
-# FIXME Add udev rule / be aware ID_MODEL_ID and ID_VENDOR_ID should match your device
+```sh
 cat <<EOF | run0 tee /etc/udev/rules.d/20-yubico.rules
 ACTION=="remove", ENV{ID_FIDO_TOKEN}=="1", RUN+="/usr/local/bin/lockcomputer.sh"
 EOF
@@ -217,6 +216,8 @@ keep your environment safer.
 Stay tuned and see you on the next post!
 
 **UPDATE**: Added `Unlock LUKS using FIDO2` section.
+
+**UPDATE**: Fix the `lockcomputer.sh` script and udev rules
 
 ## References
 
