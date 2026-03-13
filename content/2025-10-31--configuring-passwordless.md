@@ -170,28 +170,29 @@ cat <<EOF | run0 tee /usr/local/bin/lockcomputer.sh
 
 # Inspired by: https://gist.github.com/jhass/070207e9d22b314d9992
 
+# INFO This script lock the screen when it is invoked
+
+# Inspired by: https://gist.github.com/jhass/070207e9d22b314d9992
+
 lockscreen() {
-  for bus in /run/user/*/bus; do
-    uid=\$(basename \$(dirname \$bus))
-    if [ \$uid -ge 1000 ]; then
-      user=\$(id -un \$uid)
-      export DBUS_SESSION_BUS_ADDRESS=unix:path=\$bus
-      if su -c 'dbus-send --session --dest=org.freedesktop.DBus --type=method_call --print-reply  /org/freedesktop/DBus org.freedesktop.DBus.ListNames' \$user | grep org.gnome.ScreenSaver; then
-        su -c 'dbus-send --session --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock' \$user
-      fi
-    fi
-  done
+  busctl call org.freedesktop.login1 /org/freedesktop/login1 org.freedesktop.login1.Manager LockSessions
 }
 
 disconnect-network() {
-  devices=\$(nmcli --fields DEVICE,TYPE,STATE device status | grep ethernet | grep connected | awk '{ print \$1 }')
-  for device in \$devices; do
-    nmcli device down "\$device"
+  devices=$(nmcli --fields DEVICE,TYPE,STATE device status | grep ethernet | grep connected | awk '{ print $1 }')
+  for device in $devices; do
+    nmcli device down "$device"
   done
 }
 
-disconnect-network
-lockscreen
+main() {
+  echo "lockcomputer.sh: $*" >> /tmp/lockcomputer.log
+  disconnect-network
+  lockscreen
+}
+
+main "$@"
+
 EOF
 
 # Change permissions
@@ -200,8 +201,8 @@ run0 chmod u+x /usr/local/bin/lockcomputer.sh
 # Check your ID_MODEL_ID and ID_VENDOR_ID by: lsusb
 
 # FIXME Add udev rule / be aware ID_MODEL_ID and ID_VENDOR_ID should match your device
-cat <<EOF | run0 tee /etc/udev/rules.d/20-yubico.rule
-ACTION=="remove", ENV{ID_BUS}=="usb", ENV{ID_MODEL_ID}=="0407", ENV{ID_VENDOR_ID}=="1050", RUN+="/usr/local/bin/lockcomputer.sh"
+cat <<EOF | run0 tee /etc/udev/rules.d/20-yubico.rules
+ACTION=="remove", ENV{ID_FIDO_TOKEN}=="1", RUN+="/usr/local/bin/lockcomputer.sh"
 EOF
 ```
 
