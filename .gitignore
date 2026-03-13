@@ -12,6 +12,8 @@
 !requirements.txt
 !tasks.py
 !toolbox.sh
+!.markdownlint-cli2.yaml
+!.vale.ini
 
 # .github directories
 !.github

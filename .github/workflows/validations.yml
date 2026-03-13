@@ -1,0 +1,28 @@
+name: Quality Check (Markdown & Grammar)
+
+on:
+  push:
+    branches:
+      - main
+  pull_requests:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Markdown Lint
+        uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          globs: 'content/**/*.md'
+
+      - name: Vale Grammar Check
+        uses: errata-ai/vale-action@v2
+        with:
+          files: content/
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
