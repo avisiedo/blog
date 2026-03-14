@@ -27,7 +27,7 @@ references.
 - Add the configuration line by: `pamu2fcfg --username=$USER >> ~/.config/Yubico/u2f_keys`
 - Shrink permissions: `chmod 0400 ~/.config/Yubico/u2f_keys`
 - Copy u2f_keys to a the global location below by:
-  `cat -vf ~/.config/Yubico/u2f_keys | run0 tee -a /etc/u2f_mappings`
+  `cat ~/.config/Yubico/u2f_keys | run0 tee -a /etc/u2f_mappings`
 
 ## Set up passwordless
 
