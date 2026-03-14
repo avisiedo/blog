@@ -61,7 +61,7 @@ ssh-keygen -t ed25519-sk \
 ```
 
 - `-O resident` indicate to generate a resident key.
-- `-O application=ssh:fedora` set the application namespace associated to the
+- `-O application=ssh:` set the application namespace associated to the
   handler key. By default it is `ssh:`, and we need to prefix it always with
   `ssh:` if we want to generate a different key for different purposes.
 - `-O verify-required` indicates to verify (by PIN or biometrics) the user
@@ -109,7 +109,7 @@ Create and configure the allowed signers file.
 ```sh
 touch ~/.ssh/allowed_signers
 EMAIL="$(git config --global user.email)"
-PUB_KEY="$(cat ~/.ssh/id_ed25519_sk_rk_fedora.pub | awk '{ print $2 }')"
+PUB_KEY="$(cat ~/.ssh/id_ed25519_sk_rk.pub | awk '{ print $2 }')"
 printf '%s namespaces="git" ssh-ed25519 %s Git signing key %s\n' "${EMAIL}" "${PUB_KEY}" "${EMAIL}" >> ~/.ssh/allowed_signers
 unset PUB_KEY EMAIL
 ```
