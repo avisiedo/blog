@@ -143,7 +143,7 @@ Edit `/etc/crypttab` and add to your LUKS device entry: ` - fido2-device=auto`
 
 Verify enrollment by: `run0; cryptsetup luksDump /dev/sdXY`
 
-Reboot your system: `systemctl reboot` and now you should be prompt for
+Reboot your system: `systemctl reboot` and now you should be prompted for
 touching your FIDO 2 device.
 
 If you want to only unlock the disk by using your FIDO2 device you can remove
