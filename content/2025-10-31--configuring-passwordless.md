@@ -24,9 +24,10 @@ references.
 - Reboot to get the packages available: `systemctl reboot`
 - Create directory where store the configuration for your account:
   `mkdir ~/.config/Yubico`
-- Add the configuration line by: `pamu2fcfg --username=$USER > ~/.config/Yubico/u2f_keys`
+- Add the configuration line by: `pamu2fcfg --username=$USER >> ~/.config/Yubico/u2f_keys`
 - Shrink permissions: `chmod 0400 ~/.config/Yubico/u2f_keys`
-- Copy u2f_keys to the global location below by: `run0 cp -vf ~/.config/Yubico/u2f_keys /etc/u2f_mappings`
+- Copy u2f_keys to a the global location below by:
+  `cat -vf ~/.config/Yubico/u2f_keys | run0 tee -a /etc/u2f_mappings`
 
 ## Set up passwordless
 
@@ -138,6 +139,13 @@ run0 systemd-cryptenroll \
   /dev/sdXY
 ```
 
+Edit `/etc/crypttab` and add to your LUKS device entry: ` - fido2-device=auto`
+
+Verify enrollment by: `run0; cryptsetup luksDump /dev/sdXY`
+
+Reboot your system: `systemctl reboot` and now you should be prompt for
+touching your FIDO 2 device.
+
 If you want to only unlock the disk by using your FIDO2 device you can remove
 the password slot with the following command:
 
@@ -151,8 +159,6 @@ run0 systemd-cryptenroll \
 ```
 
 > Update `/dev/sdXY by your LUKS partition; `lsblk` should help you.
-
-Edit `/etc/crypttab` and add to your LUKS device entry: ` - fido2-device=auto`
 
 Reboot your system: `systemctl reboot` and now you should be
 able to unlock your LUKS partition using your FIDO2 device and
