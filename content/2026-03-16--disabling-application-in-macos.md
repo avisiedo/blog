@@ -12,25 +12,24 @@ Header_Cover: static/cover-header.jpg
 # Disabling application in macOS
 
 In macOS systems I would like to totally disable some
-applications which have been in the focus because of
-security flaws, such as Facetime, Messages and Phone.
-
-Personally I do not use any of them, and that make me
-think, why not reduce the surface attack avoiding they
-could be executed?
+applications which have been in focus because of
+security flaws, such as FaceTime, Messages and Phone.
+Personally I do not use any of them, and that makes me
+think, why not reduce the attack surface by preventing them from
+being executed?
 
 ## Searching information about .mobileconfig
 
-It has been very tought to find information about
-.mobileconfig examples to disable that applications.
-Indeed I am surprise the IA could help me more than
-trying to find specific information, becuase use to
-be the scenario where the IA start to alucinate.
+It has been very tough to find information about
+.mobileconfig examples to disable those applications.
+Indeed I am surprised that AI could help me more than
+trying to find specific information, because it used to
+be the scenario where AI starts to hallucinate.
 
 ## What I found
 
-I found an example in a IA prompt which was showing
-the example below (it was extending event for Chess.app;
+I found an example in an AI prompt which was showing
+the example below (it was extending even for Chess.app;
 which indeed is not used normally).
 
 ```xml
@@ -90,23 +89,23 @@ which indeed is not used normally).
 </plist>
 ```
 
-I tried a few examples before validate this one, and the result
+I tried a few examples before validating this one, and the result
 seems to be good. The important part is `pathBlackList` and
 `pathWhiteList`. On the first we specify the path to the applications
-we want to avoid to execute; the second is a WhiteList for
-well known applications. Im am against the second, because it
-is too broadly, and I prefer the system, so in the personal
-`.mobileconfig` I have removed the section `pathWhiteList`.
+we want to avoid executing; the second is a whitelist for
+well-known applications. I am against the second, because it
+is too broad, and I prefer the system, so in my personal
+`.mobileconfig` I have removed the `pathWhiteList` section.
 
-> BE AWARE that sometimes after apply the .mobileconfig and
-> accept the file had to be installed, I did not get the
-> message forbiding the leverage of the applications.
-> **After reboot, the profile work as expected**.
+> BE AWARE that sometimes after applying the .mobileconfig and
+> accepting the file had to be installed, I did not get the
+> message forbidding the launch of the applications.
+> **After a reboot, the profile works as expected**.
 
-## Wrap up!
+## Wrap up!
 
-We have seen an example of disabling macOS application to reduce
-the surface attack on them, by using deny list and allowed lists.
+We have seen an example of disabling macOS applications to reduce
+the attack surface on them, by using deny lists and allow lists.
 
 Hope this helps!
 Cheers!
