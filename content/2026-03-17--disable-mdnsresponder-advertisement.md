@@ -8,7 +8,7 @@ Slug: disabling-advertisements-on-mdnsresponder
 Authors: Alejandro Visiedo
 Summary: Reducing announcements about the system from mDNSResponder
 Header_Cover: static/header-cover.jpg
-Status: published
+Status: draft
 ---
 
 What is mDNSResponder in macOS systems? What is the purpose of this application?
