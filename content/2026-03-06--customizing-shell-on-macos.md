@@ -13,7 +13,7 @@ Header_Cover: images/hover-customizing-shell-on-macos.png
 
 I use to develop on Linux systems, but I do from a VM, and I was wondering how
 to customize in similar way for zsh in macOS. If you want to set up a shell
-environment similar to Linux using powerline, this article is for you.
+environment similar to Linux using powerline, this article might be of interest to you.
 
 The contents are the below:
 
@@ -59,13 +59,13 @@ experience is the same as my system terminal.
   to our .zshrc file or similar. In my case I have `.profile.d/starship.zsh`
   that is included from the `.zshrc` file:
 
-  ```sh
-  if command -v starship &>/dev/null; then
-    if tty -s &>/dev/null; then
-      source <(starship init zsh)
+    ```sh
+    if command -v starship &>/dev/null; then
+      if tty -s &>/dev/null; then
+        source <(starship init zsh)
+      fi
     fi
-  fi
-  ```
+    ```
 
 - Finally, close your terminal, and re-open again, and you will see your prompt
   shell customized.
